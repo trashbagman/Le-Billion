@@ -6,7 +6,7 @@
                 <ul class="right">
                     <li v-if="!user"><router-link :to="{name: 'Signup'}">Signup</router-link></li>
                     <li v-if="!user"><router-link :to="{name : 'Login'}">Login</router-link></li>
-                    <li v-if="user"><a>{{ user.displayName }}</a></li>
+                    <li v-if="user"><router-link :to="{name: 'ViewProfile', params: {slug: currentUserSlug}}">{{ user.displayName }}</router-link></li>
                     <li v-if="user"><a @click.prevent="logout()">Logout</a></li>
                 </ul>
             </div>
@@ -16,11 +16,22 @@
 
 <script>
 import firebase from 'firebase'
+import slugify from 'slugify'
 export default {
     name: 'Navbar',
     data() {
         return {
             user: null,
+        }
+    },
+    computed:{
+        currentUserSlug(){
+            return slugify(this.user.displayName, {
+                        replacement: '-',
+                        remove: /[$*_+~.()'"!\-:@]/g,
+                        lower: true,
+                    })
+            
         }
     },
     methods: {
@@ -38,6 +49,7 @@ export default {
                 this.user = null
             }
         })
+        
     }
 }
 </script>
