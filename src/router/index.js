@@ -19,7 +19,16 @@ const router = new Router({
       }
     },
     {
-      path: 'thread/:id',
+      path: '/profile/:slug',
+      name: 'ViewProfile',
+      component: () => import('@/components/profile/ViewProfile'),
+      meta:{
+        requiresAuth: true,
+        requiresVerif: true
+      }
+    },
+    {
+      path: '/thread/:id',
       name: 'ViewThread',
       component: () => import('@/components/threads/ViewThread'),
       meta:{
@@ -28,7 +37,7 @@ const router = new Router({
       }
     },
     {
-      path: 'createthread',
+      path: '/createthread',
       name: 'CreateThread',
       component: () => import('@/components/home/CreateThread'),
       meta: {
@@ -98,7 +107,6 @@ router.beforeEach((to, from, next) => {
     } else {
       next({name: 'Home'})
     }
-    
   } else {
     next()
   }
