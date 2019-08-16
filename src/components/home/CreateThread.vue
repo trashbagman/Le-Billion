@@ -22,6 +22,7 @@
 import { VueEditor } from "vue2-editor"
 import firebase from 'firebase'
 import db from '@/firebase/init'
+import slugify from 'slugify'
 export default {
     name: 'CreateThread',
     components: {
@@ -47,6 +48,12 @@ export default {
                 .then(doc => {
                     let id = doc.data().newestID
 
+                    let slug =  slugify(firebase.auth().currentUser.displayName, {
+                        replacement: '-',
+                        remove: /[$*_+~.()'"!\-:@]/g,
+                        lower: true,
+                    })
+
                     db.collection('threads').doc(""+id).set({
                         author: firebase.auth().currentUser.displayName,
                         replies: 0,
@@ -54,7 +61,8 @@ export default {
                         views: 0,
                         content: this.thread.content,
                         id: id,
-                        time: Date.now()
+                        time: Date.now(),
+                        slug: slug,
                     })
                     .then(() => db.collection('threadIndexer').doc('index').set({newestID: id + 1}))
                 })
