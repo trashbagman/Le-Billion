@@ -12,7 +12,7 @@
           </tr>
           <tr v-for="thread in reversedThreads" :key="thread.id">
             <td class="white-text"><router-link :to="{name: 'ViewThread', params: {id: thread.id}}">{{ thread.title }}</router-link></td>
-            <td class="white-text">{{ thread.author }}</td>
+            <td class="white-text"><router-link :to="{name: 'ViewProfile', params: {slug: thread.slug}}">{{ thread.author }}</router-link></td>
             <td class="white-text center">{{ thread.replies }}</td>
             <td class="white-text center">{{ thread.views }}</td>
             <td class="white-text center">{{ thread.time }}</td>
@@ -36,7 +36,7 @@ export default {
   computed: {
     reversedThreads(){
       return this.threads.reverse()
-    }
+    },
   },
   created(){
     let ref = db.collection('threads').orderBy('time')
@@ -51,7 +51,8 @@ export default {
               replies: doc.data().replies,
               title: doc.data().title,
               views: doc.data().views,
-              id: doc.data().id
+              id: doc.data().id,
+              slug: doc.data().slug
             })
           }
       })
