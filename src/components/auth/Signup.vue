@@ -21,7 +21,22 @@
                 </div>
                 <p class="red-text center" v-if="feedback">{{ feedback }}</p>
                 <div class="field center">
-                    <button class="btn grey darken-2">Signup</button>
+                    <button class="btn grey darken-2" v-if="!signingUp">Signup</button>
+                </div>
+                <div class="center" v-if="signingUp">
+                    <div class="preloader-wrapper small active">
+                        <div class="spinner-layer spinner-green-only">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div>
+                            <div class="gap-patch">
+                                <div class="circle"></div>
+                            </div>
+                            <div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>
@@ -43,6 +58,7 @@ export default {
             confirm_password: null,
             slug: null,
             feedback: null,
+            signingUp: null
         }
     },
     methods: {
@@ -51,14 +67,14 @@ export default {
                 this.feedback = null
                 if(this.password == this.confirm_password){
                     this.feedback = null
-
+                    this.signingUp = true
                     //Create Slug
                     this.slug = slugify(this.username, {
                         replacement: '-',
                         remove: /[$*_+~.()'"!\-:@]/g,
                         lower: true,
                     })
-                    console.log('slugify')
+
                     //Chack if username exists
                     let checkAlias = firebase.functions().httpsCallable('checkAlias')
                     checkAlias({slug: this.slug})
@@ -66,6 +82,7 @@ export default {
                         console.log(result)
                         if(!result.data.unique){
                             this.feedback = 'This alias already exists'
+                            this.signingUp = false
                         } else {
                             firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
                             //Upload userdata to firestore
@@ -74,12 +91,17 @@ export default {
                                     displayName: this.username,
                                     threads: 0,
                                     replies: 0,
-                                    uid: cred.user.uid
+                                    uid: cred.user.uid,
+                                    joinDate: Date.now(),
+                                    lastOnline: Date.now()
                                 })
                                 firebase.auth().currentUser.updateProfile({
                                     displayName: this.username
                                 })
-                                .catch(err => console.log(err))
+                                .catch(err => {
+                                    console.log(err)
+                                    this.signingUp = false
+                                })
                             })
                             //Send email verification
                             .then(() => {
@@ -89,11 +111,13 @@ export default {
                             .catch(err => {
                                 console.log(err)
                                 this.feedback = err.message
+                                this.signingUp = false
                             })
                         }
                     })
                 } else {
                     this.feedback = 'Make sure both passwords are correct.'
+                    this.signingUp = false
                 }
             }else{
                 this.feedback = 'All fields need to be filled in'
