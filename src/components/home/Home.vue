@@ -26,6 +26,7 @@
 <script>
 import moment from 'moment'
 import db from '@/firebase/init'
+import firebase from 'firebase'
 export default {
   name: 'Home',
   data () {
@@ -57,8 +58,17 @@ export default {
           }
       })
     })
+  },
+  mounted() {
+    db.collection("users").where("displayName", "==", firebase.auth().currentUser.displayName).get()
+    .then(snapshot => {
+      snapshot.forEach(doc => {
+        let docID = doc.id
+        db.collection("users").doc(doc.id).update({lastOnline: Date.now()})
+      })
+    })
 
-    
+
   }
 }
 </script>

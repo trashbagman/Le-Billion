@@ -6,10 +6,10 @@
                 <h2>{{userprofile.displayName}}</h2>
             </div>
             <div class="col s6 white-text center grid-example">
-                Join date:
+                Join date: {{userprofile.joinDate}}
             </div>
             <div class="col s6 white-text center grid-example">
-                Last Online:
+                Last Online: {{userprofile.lastOnline}}
             </div>
             <div class="col s6 white-text center grid-example">
                 <p>Threads: {{userprofile.threads}}</p>
@@ -24,6 +24,7 @@
 
 <script>
 import db from '@/firebase/init'
+import moment from 'moment'
 export default {
     name: 'ViewProfile',
     data(){
@@ -31,7 +32,9 @@ export default {
             userprofile: {
                 displayName: null,
                 threads: null,
-                replies: null
+                replies: null,
+                joinDate: null,
+                lastOnline: null
             }
         }
     },
@@ -40,7 +43,10 @@ export default {
         
         ref.get().then(doc => {
             this.userprofile = doc.data()
+            this.userprofile.joinDate = moment(this.userprofile.joinDate).format('MMMM Do YYYY')
+            this.userprofile.lastOnline = moment(this.userprofile.lastOnline).fromNow(); // 7 years ago
         })
+        
     }
 }
 </script>

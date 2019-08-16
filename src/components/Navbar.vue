@@ -9,6 +9,7 @@
                     <li v-if="user"><router-link :to="{name: 'ViewProfile', params: {slug: currentUserSlug}}">{{ user.displayName }}</router-link></li>
                     <li v-if="user"><a @click.prevent="logout()">Logout</a></li>
                 </ul>
+                
             </div>
         </nav>
     </div>
@@ -26,15 +27,21 @@ export default {
     },
     computed:{
         currentUserSlug(){
-            return slugify(this.user.displayName, {
-                        replacement: '-',
-                        remove: /[$*_+~.()'"!\-:@]/g,
-                        lower: true,
-                    })
-            
+            return this.computeSlug()
         }
     },
     methods: {
+        computeSlug(){
+            if(this.user.displayName){
+                return slugify(this.user.displayName, {
+                        replacement: '-',
+                        remove: /[$*_+~.()'"!\-:@]/g,
+                        lower: true,
+                    }) 
+            }else {
+                return 'null'
+            }
+        },
         logout(){
             firebase.auth().signOut()
             .then(() => this.$router.push({name: 'Login'}))
