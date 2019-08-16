@@ -103,6 +103,13 @@ export default {
             })
         })
     },
+    mounted() {
+        db.collection('threads').doc(this.threadID).get()
+                    .then(doc => {
+                        let views = doc.data().views
+                        db.collection('threads').doc(this.threadID).update({views: views + 1})
+                    })
+    }
 
     
 }
