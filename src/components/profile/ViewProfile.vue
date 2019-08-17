@@ -12,7 +12,7 @@
                 Last Online: {{userprofile.lastOnline}}
             </div>
             <div class="col s6 white-text center grid-example">
-                <p>Threads: {{userprofile.threads}}</p>
+                <p><router-link :to="{name: 'ProfileThreadList', params:{slug: this.$route.params.slug}}">Threads:</router-link> {{userprofile.threads}}</p>
             </div>
             <div class="col s6 white-text center grid-example">
                 <p>Replies: {{userprofile.replies}}</p>
@@ -44,9 +44,8 @@ export default {
         ref.get().then(doc => {
             this.userprofile = doc.data()
             this.userprofile.joinDate = moment(this.userprofile.joinDate).format('MMMM Do YYYY')
-            this.userprofile.lastOnline = moment(this.userprofile.lastOnline).fromNow(); // 7 years ago
+            this.userprofile.lastOnline = moment(this.userprofile.lastOnline).fromNow()
         })
-        
     }
 }
 </script>
