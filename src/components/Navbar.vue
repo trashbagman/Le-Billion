@@ -4,6 +4,7 @@
             <div class="container">
                 <router-link :to="{name: 'Home'}" class="brand-logo left">LeBillion</router-link>
                 <ul class="right">
+                    <li><router-link :to="{name: 'About'}">About</router-link></li>
                     <li v-if="!user"><router-link :to="{name: 'Signup'}">Signup</router-link></li>
                     <li v-if="!user"><router-link :to="{name : 'Login'}">Login</router-link></li>
                     <li v-if="user"><router-link :to="{name: 'ViewProfile', params: {slug: currentUserSlug}}">{{ user.displayName }}</router-link></li>

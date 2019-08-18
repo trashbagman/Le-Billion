@@ -19,6 +19,11 @@ const router = new Router({
       }
     },
     {
+      path: '/about',
+      name: 'About',
+      component: () => import('@/components/home/About'),
+    },
+    {
       path: '/profile/:slug',
       name: 'ViewProfile',
       component: () => import('@/components/profile/ViewProfile'),
