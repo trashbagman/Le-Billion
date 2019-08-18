@@ -1,7 +1,7 @@
 <template>
     <div class="login container">
-        <div class="grey darken-3 card-panel">
-            <h2 class="white-text center">Login</h2>
+        <div class="card-panel">
+            <h2 class="center">Login</h2>
             <form @submit.prevent="loginUser">
                 <div class="field">
                     <label for="email">Email</label>
@@ -14,7 +14,7 @@
                 <p><router-link :to="{name: 'ForgotPassword'}">Forgot password?</router-link></p>
                 <p class="red-text center" v-if="feedback">{{ feedback }}</p>
                 <div class="field center">
-                    <button class="btn grey darken-2">Login</button>
+                    <button class="btn grey">Login</button>
                 </div>
             </form>
         </div>
@@ -67,5 +67,8 @@ export default {
     }
     .login .field{
         margin-bottom: 10px;
+    }
+    .login .card-panel{
+        background-color: #efefef;
     }
 </style>

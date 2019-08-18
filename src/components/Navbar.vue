@@ -1,6 +1,6 @@
 <template>
     <div class="navbar">
-        <nav class="grey darken-3">
+        <nav class="nav">
             <div class="container">
                 <router-link :to="{name: 'Home'}" class="brand-logo left">LeBillion</router-link>
                 <ul class="right">
@@ -62,5 +62,13 @@ export default {
 </script>
 
 <style>
-
+    .navbar .nav{
+        background-color: #CAEBF2;
+    }
+    .navbar ul a{
+        color: #111;
+    }
+    .navbar .brand-logo{
+        color: #111
+    }
 </style>

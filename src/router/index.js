@@ -28,6 +28,15 @@ const router = new Router({
       }
     },
     {
+      path: '/profile/:slug/thread',
+      name: 'ProfileThreadList',
+      component: () => import('@/components/profile/ProfileThreadList'),
+      meta:{
+        requiresAuth: true,
+        requiresVerif: true
+      }
+    },
+    {
       path: '/thread/:id',
       name: 'ViewThread',
       component: () => import('@/components/threads/ViewThread'),

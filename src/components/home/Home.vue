@@ -1,26 +1,25 @@
 <template>
-  <div class="home container">
-      <div class="grey darken-3 card-panel threads">
-        <router-link :to="{name: 'CreateThread'}"><button class="btn grey darken-2">Create Thread</button></router-link>
-        <table>
-          <tr>
-            <th class="white-text">Thread</th>
-            <th class="white-text">Author</th>
-            <th class="white-text center">Replies</th>
-            <th class="white-text center">Views</th>
-            <th class="white-text center">Date Created</th>
-          </tr>
-          <tr v-for="thread in reversedThreads" :key="thread.id">
-            <td class="white-text"><router-link :to="{name: 'ViewThread', params: {id: thread.id}}">{{ thread.title }}</router-link></td>
-            <td class="white-text"><router-link :to="{name: 'ViewProfile', params: {slug: thread.slug}}">{{ thread.author }}</router-link></td>
-            <td class="white-text center">{{ thread.replies }}</td>
-            <td class="white-text center">{{ thread.views }}</td>
-            <td class="white-text center">{{ thread.time }}</td>
-          </tr>
-        </table>
-      </div>    
-  </div>
-    
+    <div class="home container">
+        <div class="card-panel threads">
+          <router-link :to="{name: 'CreateThread'}"><button class="btn">Create Thread</button></router-link>
+          <table>
+            <tr>
+              <th class="">Thread</th>
+              <th class="">Author</th>
+              <th class="center">Replies</th>
+              <th class="center">Views</th>
+              <th class="center">Date Created</th>
+            </tr>
+            <tr v-for="thread in reversedThreads" :key="thread.id">
+              <td class="thread-title"><router-link :to="{name: 'ViewThread', params: {id: thread.id}}">{{ thread.title }}</router-link></td>
+              <td class=""><router-link :to="{name: 'ViewProfile', params: {slug: thread.slug}}">{{ thread.author }}</router-link></td>
+              <td class="center">{{ thread.replies }}</td>
+              <td class="center">{{ thread.views }}</td>
+              <td class="center">{{ thread.time }}</td>
+            </tr>
+          </table>
+        </div>  
+    </div>
 </template>
 
 <script>
@@ -78,5 +77,17 @@ export default {
   .home .threads{
     margin-top: 60px;
   }
-
+  .home button{
+    background-color: #9e9e9e;
+  }
+  body{
+    background-color: #a9a9a9
+  }
+  .home .thread-title{
+    font-size: 1.4em;
+    font-weight: bolder;
+  }
+  .home .threads{
+    background-color: #efefef;
+  }
 </style>

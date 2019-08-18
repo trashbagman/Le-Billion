@@ -1,24 +1,24 @@
 <template>
     <div class="viewprofile container">
-        <div class="card-panel">
+
         <div class="row userprofile">
-            <div class="col s12 white-text center grid-example grid-title">
+            <div class="col s12 center grid-example grid-title">
                 <h2>{{userprofile.displayName}}</h2>
             </div>
-            <div class="col s6 white-text center grid-example">
+            <div class="col s6 center grid-example">
                 Join date: {{userprofile.joinDate}}
             </div>
-            <div class="col s6 white-text center grid-example">
+            <div class="col s6 center grid-example">
                 Last Online: {{userprofile.lastOnline}}
             </div>
-            <div class="col s6 white-text center grid-example">
+            <div class="col s6 center grid-example">
                 <p><router-link :to="{name: 'ProfileThreadList', params:{slug: this.$route.params.slug}}">Threads:</router-link> {{userprofile.threads}}</p>
             </div>
-            <div class="col s6 white-text center grid-example">
+            <div class="col s6 center grid-example">
                 <p>Replies: {{userprofile.replies}}</p>
             </div>
         </div>
-        </div>  
+        
     </div>
 </template>
 
@@ -59,16 +59,19 @@ export default {
         text-align: center;
         line-height: 50px;
         font-size: 28px;
-        background-color: gray;
-        color: white;
+        background-color: #efefef;
+        color: #111;
         padding: 0;
     }
     .col.grid-title{
         text-align: left;
-        padding-left: 10px;
+        padding-left: 30px;
     }
 
     .viewprofile .userprofile{
         margin-top: 20px;
     }
+    body{
+    background-color: #a9a9a9
+  }
 </style>

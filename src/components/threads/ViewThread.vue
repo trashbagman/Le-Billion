@@ -1,27 +1,29 @@
 <template>
     <div class="viewthread container">
-        <div class="grey darken-3 card-panel">
-            <h2 class="white-text center" v-if="thread">{{ thread.title }}</h2>
+        <div class="card-panel">
+            <h3 class="center" v-if="thread">{{ thread.title }}</h3>
             <div class="thread-content" id="thread-content"></div>
         </div>
         
-        <ul class="collection with-header">
-            <li class="collection-header"><h4>Replies</h4></li>
-            <li class="collection-item" v-for="(reply, index) in replies" :key="index">
-                <p>{{ reply.author }}</p>
-                <span id="reply-content" v-html="reply.content"></span>
-                <p>{{ reply.time }}</p>
-            </li>
-        </ul>
+        <div class="replies-list">
+            <ul class="collection with-header">
+                <li class="collection-header"><h4>Replies</h4></li>
+                <li class="collection-item" v-for="(reply, index) in replies" :key="index">
+                    <p>{{ reply.author }}</p>
+                    <span id="reply-content" v-html="reply.content"></span>
+                    <p>{{ reply.time }}</p>
+                </li>
+            </ul>
+        </div>
         <div class="card-panel">
-            <form @submit.prevent="replyThread">
+            <form @submit.prevent="replyThread" class="replyThread">
                 <div class="field">
                     <vue-editor v-model="replyContent"></vue-editor>
                 </div>
                 <div class="field right">
-                    <button class="btn grey darken-2">Post Reply</button>
+                    <button class="btn">Post Reply</button>
                 </div>
-            </form> 
+            </form>
         </div>
     </div>
 </template>
@@ -31,6 +33,7 @@ import { VueEditor } from "vue2-editor"
 import firebase from 'firebase'
 import db from '@/firebase/init'
 import moment from 'moment'
+import slugify from 'slugify'
 export default {
     name: 'ViewThread',
     components: {
@@ -59,6 +62,20 @@ export default {
                 .then(() => {
                     this.replyContent = null
                 })
+                
+                let slug =  slugify(firebase.auth().currentUser.displayName, {
+                        replacement: '-',
+                        remove: /[$*_+~.()'"!\-:@]/g,
+                        lower: true,
+                    })
+
+                let userRef = db.collection('users').doc(slug)
+                userRef.get().then(doc => {
+                    let reply = doc.data().replies
+                    userRef.update({replies: reply + 1})    
+                })
+
+
                 
                 //increases number replies of the thread in the database by 1
                 db.collection('threads').doc(this.threadID).get()
@@ -105,18 +122,38 @@ export default {
     },
     mounted() {
         db.collection('threads').doc(this.threadID).get()
-                    .then(doc => {
-                        let views = doc.data().views
-                        db.collection('threads').doc(this.threadID).update({views: views + 1})
-                    })
+            .then(doc => {
+                let views = doc.data().views
+                db.collection('threads').doc(this.threadID).update({views: views + 1})
+            })
     }
-
-    
 }
 </script>
 
 <style>
     .viewthread .card-panel{
         margin-top: 20px;
+    }
+    .viewthread .replyThread{
+        margin-bottom: 60px;
+    }
+    .viewthread button{
+        margin-top: 20px;
+        background-color: #9e9e9e;
+    }
+    .viewthread h3{
+        font-weight: bolder;
+    }
+    .viewthread .card-panel{
+        background-color: #efefef
+    }
+    .viewthread .collection-header{
+        background-color: #efefef
+    }
+    .viewthread .collection-item{
+        background-color: #efefef
+    }
+    body{
+        background-color: #a9a9a9;
     }
 </style>

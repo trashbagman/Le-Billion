@@ -1,7 +1,7 @@
 <template>
     <div class="forgotPassword container">
-        <div class="grey darken-3 card-panel">
-            <h2 class="white-text center">Forgot Password?</h2>
+        <div class="card-panel">
+            <h2 class="center">Forgot Password?</h2>
             <form @submit.prevent="resetPass">
                 <div class="field">
                     <label for="email">Email</label>
@@ -9,7 +9,7 @@
                 </div>
                 <p class="red-text center" v-if="feedback">{{ feedback }}</p>
                 <div class="field">
-                    <button class="btn grey darken-2">Reset Password</button>
+                    <button class="btn grey">Reset Password</button>
                 </div>
             </form>
         </div>
@@ -52,5 +52,7 @@ export default {
     .forgotPassword .field{
         margin-bottom: 10px;
     }
-
+    .forgotPassword .card-panel{
+        background-color: #efefef;
+    }
 </style>

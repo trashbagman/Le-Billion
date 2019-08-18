@@ -1,10 +1,10 @@
 <template>
     <div class="emailVerification container">
-        <div class="grey darken-3 card-panel">
-            <h2 class="white-text center">Verify Email</h2>
-            <p class="white-text"> Thanks for signing up! An email verification has been sent to you. Please verify your email to login.</p>
-            <p class="white-text">Didn't get the email?<a href='' @click.prevent="resendEmail"> Click here</a> to resend</p>
-            <p class="white-text"><a href=''>Click here</a> when verification is finished.</p>
+        <div class="card-panel">
+            <h2 class="center">Verify Email</h2>
+            <p class=""> Thanks for signing up! An email verification has been sent to you. Please verify your email to login.</p>
+            <p class="">Didn't get the email?<a href='' @click.prevent="resendEmail"> Click here</a> to resend</p>
+            <p class=""><a href=''>Click here</a> when verification is finished.</p>
         </div>
     </div>
 </template>
@@ -32,6 +32,9 @@ export default {
     }
     .emailVerification h2{
         font-size: 2.4em;
+    }
+    .emailVerification .card-panel{
+        background-color: #efefef;
     }
 
 </style>

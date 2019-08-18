@@ -1,7 +1,7 @@
 <template>
     <div class="signup container">
-        <div class="grey darken-3 card-panel">
-            <h2 class="white-text center">SignUp</h2>
+        <div class="card-panel">
+            <h2 class="center">SignUp</h2>
             <form @submit.prevent="signupUser">
                 <div class="field">
                     <label for="username">Username</label>
@@ -21,7 +21,7 @@
                 </div>
                 <p class="red-text center" v-if="feedback">{{ feedback }}</p>
                 <div class="field center">
-                    <button class="btn grey darken-2" v-if="!signingUp">Signup</button>
+                    <button class="btn grey" v-if="!signingUp">Signup</button>
                 </div>
                 <div class="center" v-if="signingUp">
                     <div class="preloader-wrapper small active">
@@ -137,5 +137,9 @@ export default {
     }
     .signup .field{
         margin-bottom: 10px;
+    }
+
+    .signup .card-panel{
+        background-color: #efefef;
     }
 </style>

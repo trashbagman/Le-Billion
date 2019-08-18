@@ -1,6 +1,6 @@
 <template>
     <div class="createthread container">
-        <div class="card-panel">
+        <div class="card-panel createthread-card">
             <p class="red-text center" v-if="feedback">{{ feedback }}</p>
             <form @submit.prevent="createThread" class="field-form">
                 <div class="field">
@@ -11,7 +11,7 @@
                     <vue-editor v-model="thread.content"></vue-editor>
                 </div>
                 <div class="field right">
-                    <button class="btn grey darken-2">Post Thread</button>
+                    <button class="btn">Post Thread</button>
                 </div>
             </form>
 
@@ -98,5 +98,14 @@ export default {
     }
     .createthread .field-form{
         margin-bottom: 60px;
+    }
+    .createthread button{
+        background-color: #9e9e9e;
+    }
+    body{
+        background-color: #a9a9a9
+    }
+    .createthread .createthread-card{
+        background-color: #efefef;
     }
 </style>
