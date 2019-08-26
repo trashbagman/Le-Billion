@@ -16,7 +16,9 @@
                 <li>- Can see all threads made by a specific user.</li>
             </ul>
             <p>Used Quill api for rich text editor</p>
+            <p>Many thanks to KayTea#7030 for the logo design.</p>
             <p>Source Code: <a href="https://github.com/trashbagman/Le-Billion">Github</a></p>
+
             <p>© Erik Z. 2019</p>
         </div>
     </div>

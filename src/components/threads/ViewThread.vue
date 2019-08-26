@@ -11,7 +11,11 @@
                 <li class="collection-item" v-for="(reply, index) in replies" :key="index">
                     <p>{{ reply.author }}</p>
                     <span id="reply-content" v-html="reply.content"></span>
-                    <p>{{ reply.time }}</p>
+                    <p>{{ reply.time }} <a class="right waves-effect waves-light btn" @click.prevent="ShowReply">reply</a></p>
+                    <form @submit.prevent="PostReplyReply" v-if="showReply">
+                        <label for="reply">Reply</label>
+                        <input type="text" name="reply" v-model="replyreplycontent">
+                    </form>
                 </li>
             </ul>
         </div>
@@ -44,10 +48,18 @@ export default {
             thread: null,
             replies: [],
             replyContent: null,
-            feedback: null
+            feedback: null,
+            showReply: false,
+            replyreplycontent: null,
         }
     },
     methods:{
+        PostReplyReply(){
+
+        },
+        ShowReply(){
+            this.showReply = !this.showReply
+        },
         replyThread() {
             if(this.replyContent){
                 this.feedback = null
@@ -111,7 +123,7 @@ export default {
                 if(change.type == 'added'){
                     let doc = change.doc
                     this.replies.push({
-                        time: moment(doc.data().time).format('MMMM Do YYYY, h:mm:ss a'),
+                        time: moment(doc.data().time).fromNow(),
                         author: doc.data().author,
                         content: doc.data().content
                     })

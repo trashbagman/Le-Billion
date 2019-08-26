@@ -2,7 +2,8 @@
     <div class="navbar">
         <nav class="nav">
             <div class="container">
-                <router-link :to="{name: 'Home'}" class="brand-logo left">LeBillion</router-link>
+                <router-link :to="{name: 'Home'}" class="brand-logo left"><i><img src="../assets/logo_scaled.svg" width="60" height="60"></i> Lebillion</router-link>
+
                 <ul class="right">
                     <li><router-link :to="{name: 'About'}">About</router-link></li>
                     <li v-if="!user"><router-link :to="{name: 'Signup'}">Signup</router-link></li>
